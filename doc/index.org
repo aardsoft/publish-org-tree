@@ -1,0 +1,29 @@
+* Documentation
+
+** Publish to github pages
+
+This action can directly publish to [[https://pages.github.com/][github pages]]. To use this first a branch for pages needs to be created. The following creates a branch with an empty index.html:
+
+#+BEGIN_SRC bash
+:@dev; git checkout --orphan gh-pages
+:@dev; git rm -rf .
+:@dev; touch index.html
+:@dev; git add index.html
+:@dev; git commit -m 'Initialize gh-pages branch'
+:@dev; git push origin gh-pages
+:@dev; git checkout master
+#+END_SRC
+
+Next the =gh-pages= parameter needs to be added to this action. Note that any value here is read as =True=:
+
+#+BEGIN_SRC yaml
+- name: Build page
+  uses: aardsoft/publish-org-tree@v1
+  with:
+    project-directory: doc
+    gh-pages: true
+  env:
+    GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#+END_SRC
+
+The =GH_TOKEN= variable with the github secret is required for pushing to the branch.

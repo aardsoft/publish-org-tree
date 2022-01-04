@@ -1,0 +1,24 @@
+on:
+  release:
+    types: [created]
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  publish:
+    name: Test documentation build and publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build page
+      uses: ./
+      with:
+        gh-pages: true
+        project-directory: doc
+      env:
+        GH_TOKEN: ${{secrets.GITHUB_TOKEN}}

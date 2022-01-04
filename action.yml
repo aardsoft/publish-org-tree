@@ -1,0 +1,79 @@
+name: 'Publish Org-tree'
+description: 'Publish a directory tree of org-mode files'
+
+inputs:
+  org-publishing-function:
+    description: 'The function name to use for publishing'
+    required: True
+    default: 'org-html-publish-to-html'
+  project-name:
+    description: 'The name of the publishing project'
+    required: True
+    default: 'default'
+  project-directory:
+    description: 'The directory containing the org-mode files'
+    required: True
+  publish-directory:
+    description: 'The directory for publishing generated files'
+    required: True
+    default: /tmp/publish-org-tree
+  static-file-extensions:
+    description: 'Extensions of static files to export'
+    required: True
+    default: 'css js png jpg gif pdf mp3 ogg zip'
+  gh-pages:
+    description: 'Publish to gh pages'
+  gh-pages-branch:
+    description: 'The branch to push pages to'
+    required: True
+    default: 'gh-pages'
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        export
+        echo "Extra variables: "
+        echo "gh-pages: ${{ inputs.gh-pages }}"
+        echo "gh-pages-branch: ${{ inputs.gh-pages-branch }}"
+      shell: bash
+
+    - name: checkout github pages branch
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        ref: ${{ inputs.gh-pages-branch }}
+        path: gh-pages
+      if: ${{ inputs.gh-pages != 0 }}
+
+    - run: |
+        sudo apt-get update
+        sudo apt-get -y install emacs graphviz zip rsync
+      shell: bash
+
+    - run: ${{ github.action_path}}/publish-org-tree.sh
+      shell: bash
+      env:
+        org_publishing_function: ${{ inputs.org-publishing-function }}
+        static_files: ${{ inputs.static-file-extensions }}
+        project_directory: ${{ inputs.project-directory }}
+        publish_directory: ${{ inputs.publish-directory }}
+        project_name: ${{ inputs.project-name }}
+
+    - name: sync built files
+      run: |
+        rsync -avp --delete --exclude .git ${{ inputs.publish-directory }}/out/ .
+      working-directory: gh-pages
+      shell: bash
+      if: ${{ inputs.gh-pages != 0 }}
+
+    - name: commit changes
+      run: |
+        git config --local user.email "invalid@aardsoft.fi"
+        git config --local user.name "Github Action"
+        git add --all
+        git commit -m "Update documentation by ${GITHUB_ACTOR} for ${GITHUB_EVENT_NAME} @${GITHUB_SHA} #${GITHUB_RUN_ID}" -a
+        git push "https://${GITHUB_ACTOR}:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" --force
+      working-directory: gh-pages
+      shell: bash
+      if: ${{ inputs.gh-pages != 0 }}

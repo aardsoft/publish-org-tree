@@ -1,0 +1,4 @@
+* Export org-files
+This action allows easily exporting a tree of [[https://orgmode.org/][org files]] to HTML, and optionally publish it to a github page.
+
+Documentation on how to use it is published on [[https://aardsoft.github.io/publish-org-tree/][github pages]], using this action.
