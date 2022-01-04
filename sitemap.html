@@ -4,7 +4,7 @@
 <!-- 2022-01-04 Tue 19:13 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>&lrm;</title>
+<title>Sitemap for project default-html</title>
 <meta name="generator" content="Org mode">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -227,61 +227,10 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#orga9b6f92">Documentation</a>
-<ul>
-<li><a href="#orgd0e7542">Publish to github pages</a></li>
+<h1 class="title">Sitemap for project default-html</h1>
+<ul class="org-ul">
+<li><a href="index.html">index</a></li>
 </ul>
-</li>
-</ul>
-</div>
-</div>
-<div id="outline-container-orga9b6f92" class="outline-2">
-<h2 id="orga9b6f92">Documentation</h2>
-<div class="outline-text-2" id="text-orga9b6f92">
-</div>
-<div id="outline-container-orgd0e7542" class="outline-3">
-<h3 id="orgd0e7542">Publish to github pages</h3>
-<div class="outline-text-3" id="text-orgd0e7542">
-<p>
-This action can directly publish to <a href="https://pages.github.com/">github pages</a>. To use this first a branch for pages needs to be created. The following creates a branch with an empty index.html:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-bash">:@dev; git checkout --orphan gh-pages
-:@dev; git rm -rf .
-:@dev; touch index.html
-:@dev; git add index.html
-:@dev; git commit -m <span style="font-style: italic;">'Initialize gh-pages branch'</span>
-:@dev; git push origin gh-pages
-:@dev; git checkout master
-</pre>
-</div>
-
-<p>
-Next the <code>gh-pages</code> parameter needs to be added to this action. Note that any value here is read as <code>True</code>:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-yaml">- name: Build page
-  uses: aardsoft/publish-org-tree@v1
-  with:
-    project-directory: doc
-    gh-pages: true
-  env:
-    GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-</pre>
-</div>
-
-<p>
-The <code>GH_TOKEN</code> variable with the github secret is required for pushing to the branch.
-</p>
-</div>
-</div>
-</div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Created: 2022-01-04 Tue 19:13</p>
