@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2022-01-04 Tue 18:20 -->
+<!-- 2022-01-04 Tue 18:44 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>&lrm;</title>
@@ -231,21 +231,21 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org87412af">Documentation</a>
+<li><a href="#orgd5ffe44">Documentation</a>
 <ul>
-<li><a href="#org14c8484">Publish to github pages</a></li>
+<li><a href="#orgf6292c6">Publish to github pages</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org87412af" class="outline-2">
-<h2 id="org87412af">Documentation</h2>
-<div class="outline-text-2" id="text-org87412af">
+<div id="outline-container-orgd5ffe44" class="outline-2">
+<h2 id="orgd5ffe44">Documentation</h2>
+<div class="outline-text-2" id="text-orgd5ffe44">
 </div>
-<div id="outline-container-org14c8484" class="outline-3">
-<h3 id="org14c8484">Publish to github pages</h3>
-<div class="outline-text-3" id="text-org14c8484">
+<div id="outline-container-orgf6292c6" class="outline-3">
+<h3 id="orgf6292c6">Publish to github pages</h3>
+<div class="outline-text-3" id="text-orgf6292c6">
 <p>
 This action can directly publish to <a href="https://pages.github.com/">github pages</a>. To use this first a branch for pages needs to be created. The following creates a branch with an empty index.html:
 </p>
@@ -269,11 +269,9 @@ Next the <code>gh-pages</code> parameter needs to be added to this action. Note 
 <pre class="src src-yaml">- name: Build page
   uses: aardsoft/publish-org-tree@v1
   with:
+    project-directory: doc
     gh-pages: true
   env:
-    publish_directory: /tmp/org-publish
-    project_name: documentation
-    project_directory: doc
     GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 </pre>
 </div>
@@ -286,7 +284,7 @@ The <code>GH_TOKEN</code> variable with the github secret is required for pushin
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2022-01-04 Tue 18:20</p>
+<p class="date">Created: 2022-01-04 Tue 18:44</p>
 <p class="validation"></p>
 </div>
 </body>
