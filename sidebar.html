@@ -4,7 +4,7 @@
 <!-- 2022-01-05 Wed 14:43 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>&lrm;</title>
+<title>Sitemap for project default-pre</title>
 <meta name="generator" content="Org mode">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -227,146 +227,8 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#orgd4b34bb">Documentation</a>
-<ul>
-<li><a href="#org8fbda6f">Finetune the output with environment variables</a>
-<ul>
-<li><a href="#org4620c18">pre_excludes, excludes</a></li>
-<li><a href="#org14b833d">pre_includes, includes</a></li>
-<li><a href="#org4391b4d">pre_auto_sitemap (t), auto_sitemap (nil)</a></li>
-<li><a href="#orgc43c2f0">with_date, with_email, with_toc</a></li>
-<li><a href="#org25f8d87">pre_sitemap_filename, sitemap_filename</a></li>
-<li><a href="#org96bec80">pre_headline_levels, headline_levels</a></li>
-<li><a href="#org405eeba">pre_section_numbers, section_numbers</a></li>
-<li><a href="#orgb87520a">pre_org_publishing_function</a></li>
-</ul>
-</li>
-<li><a href="#org2967b79">Publish to github pages</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<div id="outline-container-orgd4b34bb" class="outline-2">
-<h2 id="orgd4b34bb">Documentation</h2>
-<div class="outline-text-2" id="text-orgd4b34bb">
-</div>
-<div id="outline-container-org8fbda6f" class="outline-3">
-<h3 id="org8fbda6f">Finetune the output with environment variables</h3>
-<div class="outline-text-3" id="text-org8fbda6f">
-<p>
-The script generating the project configuration evaluates several additional environment variables not exported as action inputs. They can be changed by just setting them in the environment:
-</p>
+<h1 class="title">Sitemap for project default-pre</h1>
 
-<div class="org-src-container">
-<pre class="src src-yaml">- name: Build page
-  uses: aardsoft/publish-org-tree@v1
-  with:
-    project-directory: doc
-    gh-pages: true
-  env:
-    GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    pre_excludes: .
-</pre>
-</div>
-</div>
-
-<div id="outline-container-org4620c18" class="outline-4">
-<h4 id="org4620c18">pre_excludes, excludes</h4>
-<div class="outline-text-4" id="text-org4620c18">
-<p>
-A list of strings to match files against for exclusion. Note that this is not a regular expression - the list is fed into <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Regexp-Functions.html">regexp-opt</a>, which tries to match the shortest possible strings. For example, setting this to <code>.</code> would include every file with a file extension (i.e., most, and with default settings, any file potentially included).
-</p>
-</div>
-</div>
-
-<div id="outline-container-org14b833d" class="outline-4">
-<h4 id="org14b833d">pre_includes, includes</h4>
-<div class="outline-text-4" id="text-org14b833d">
-<p>
-A list of extra files to include, relative to the document directory.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org4391b4d" class="outline-4">
-<h4 id="org4391b4d">pre_auto_sitemap (t), auto_sitemap (nil)</h4>
-<div class="outline-text-4" id="text-org4391b4d">
-<p>
-Configures automatic sitemap generation. For a two pass configuration the main purpose of the first pass is to build the sitemap, while it does not need to be re-generated in the second pass - which is reflected in the defaults.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgc43c2f0" class="outline-4">
-<h4 id="orgc43c2f0">with_date, with_email, with_toc</h4>
-<div class="outline-text-4" id="text-orgc43c2f0">
-<p>
-Configure inclusion of date, email or TOC.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org25f8d87" class="outline-4">
-<h4 id="org25f8d87">pre_sitemap_filename, sitemap_filename</h4>
-</div>
-
-<div id="outline-container-org96bec80" class="outline-4">
-<h4 id="org96bec80">pre_headline_levels, headline_levels</h4>
-</div>
-
-<div id="outline-container-org405eeba" class="outline-4">
-<h4 id="org405eeba">pre_section_numbers, section_numbers</h4>
-</div>
-
-<div id="outline-container-orgb87520a" class="outline-4">
-<h4 id="orgb87520a">pre_org_publishing_function</h4>
-</div>
-</div>
-
-<div id="outline-container-org2967b79" class="outline-3">
-<h3 id="org2967b79">Publish to github pages</h3>
-<div class="outline-text-3" id="text-org2967b79">
-<p>
-This action can directly publish to <a href="https://pages.github.com/">github pages</a>. To use this first a branch for pages needs to be created. The following creates a branch with an empty index.html:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-bash">:@dev; git checkout --orphan gh-pages
-:@dev; git rm -rf .
-:@dev; touch index.html
-:@dev; git add index.html
-:@dev; git commit -m <span style="font-style: italic;">'Initialize gh-pages branch'</span>
-:@dev; git push origin gh-pages
-:@dev; git checkout master
-</pre>
-</div>
-
-<p>
-Next the <code>gh-pages</code> parameter needs to be added to this action. Note that any value here is read as <code>True</code>:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-yaml">- name: Build page
-  uses: aardsoft/publish-org-tree@v1
-  with:
-    project-directory: doc
-    gh-pages: true
-  env:
-    GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-</pre>
-</div>
-
-<p>
-The <code>GH_TOKEN</code> variable with the github secret is required for pushing to the branch.
-</p>
-</div>
-</div>
-</div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Created: 2022-01-05 Wed 14:43</p>
