@@ -1,7 +1,353 @@
-* Documentation
+#+BIND: org-page-template "page_with_inline_sidebar.html"
+#+BIND: org-page-toc-in-sidebar t
+#+BIND: org-page-default-stylesheets t
+#+TITLE: Exporting org-mode trees to HTML
 
-** Publish to github pages
+* Introduction
+This project provides a wrapper to simplify using [[https://orgmode.org/][org files]] as base for scripted publishing projects. Most of the implementation is in lisp, with a [[https://github.com/features/actions][GithHub action]] and a shell script wrapper provided.
 
+Per default it supports page creation using [[https://github.com/juanjosegarciaripoll/org-thtml][org-thtml]] (as used for this page) or the default org-mode output ([[./plain/][this page with default renderer]]) - but can be customised to call arbitrary functions to handle the export. Tested copies of both org-thtml and [[https://github.com/hniksic/emacs-htmlize][htmlize]] are included in this repository, and will be automatically used by both script and action.
+
+Very simple projects will be fine with some variables set in file headers, if at all. More complex projects may need to set some variables in [[*User setting files][user setting files]], while even more advanced ones will want to create custom lisp functions there.
+
+* User setting files
+The export script will try to load the file =export-settings.user= in a directory matching the project name, if available, and fall back to the project directory otherwise.
+
+This file can contain arbitrary Emacs lisp, and gets loaded at the very end, i.e., can override or add to any variable or function definitions.
+
+** Changing defaults for export modules
+Each export module uses three levels of configuration:
+
+- publish-org-tree defaults
+- overwritten by settings used when adding the module
+- overwritten by settings in <module>-export-plist
+
+All [[https://orgmode.org/manual/Publishing-options.html][Org-mode publishing options]] are allowed. The format follows the [[https://orgmode.org/manual/Project-alist.html][org-publish-project-alist]] format to allow easy transformation of the different modules into a single org-publish-project-alist.
+
+Project specific modules are best configured as described in the following section, while overrides for the default modules are best done using the 3rd override:
+
+#+BEGIN_SRC
+(setq html-export-plist '(:with-toc t))
+#+END_SRC
+
+This will enable TOC generation for the main HTML export module. Note that TOC generation is mainly useful when using the default org exporter - with org-thtml it is often easier to just call =org-html-toc= in a template. Also see the [[*org-page-toc-level][org-page-toc-level]] variable.
+
+** Configuring additional export modules
+The export script uses the list =dynamic-modules= for generated content, and the list =static-modules= for static content. Any additional modules pushed onto those list will be generated before the default modules - this is useful for generating files the main export pass expects to be present. The format follows the specification for
+
+#+BEGIN_SRC lisp
+(push `("sidebar"
+        :publishing-directory ,abs-template-directory
+        :base-directory ,(plist-get settings :project-directory)
+        :exclude ,(regexp-opt '("index.org" "README.org"))
+        :include ("sidebar.org")) dynamic-modules)
+
+#+END_SRC
+
+This example defines an export module called =sidebar=, excluding the files =index.org= and =README.org=, with the resulting html files generated in the absolute path to the [[*template_directory][template directory]] - which is the search path for org-thtmls :include macro.
+
+#+BEGIN_SRC lisp
+(push `("fontawesome"
+        :publishing-directory ,(expand-file-name "fontawesome" (plist-get settings :publish-directory))
+        :base-directory ,(expand-file-name "../fontawesome" (plist-get settings :project-directory)))
+        static-modules)
+#+END_SRC
+
+This example pushes a local copy of [[https://fontawesome.com/][Font Awesome]] as static files to the subdirectory =fontawesome= in the [[*publish_directory][publish directory]].
+
+* Building locally
+It is recommended to set up and test local builds first - once those are working transferring it to build on GitHub is trivial.
+
+This section assumes the following local directory structure, with this repository checked out next to the directory containing the data for the published page:
+
+#+BEGIN_EXAMPLE
+/home/user/git/
+|-- publish-org-tree
+|   |-- doc
+|   |   `-- index.org
+|   |- action.yml
+|   |- publish-org-tree.el
+|   `- publish-org-tree.sh
+|-- page
+|   |-- style
+|   |    `-- css
+|   |-- templates
+|   `-- doc
+|       `-- index.org
+#+END_EXAMPLE
+
+The shell should be in the =page= directory, calling the =publish-org-tree.sh= script with a relative path:
+
+#+BEGIN_SRC shell
+~/page/> ../publish-org-tree/publish-org-tree.sh
+Loading /home/user/git/publish-org-tree/publish-org-tree.el (source)...
+Loading /home/user/git/publish-org-tree/ox-thtml.el (source)...
+Package cl is deprecated
+,*** Configuration summary ***
+
+Configuration variables (defaults marked with *):
+
+,*default-page-template: page.html
+,*org-publish-function: org-html-publish-to-html
+,*project-directory: .
+,*project-name: default
+,*publish-directory:
+,*static-files: (css eot gif jpg js json less mp3 ogg pdf png scss svg ttf txt woff woff2 yml zip)
+,*style-directory:
+,*template-directory:
+
+Publishing project ’default’ to
+Elements in export alist:
+- default
+- default-static
+- default-html
+Loading /home/user/.org-timestamps/default-static.cache...
+Publishing file /home/user/git/page/style/css/default.css using ‘org-publish-attachment’
+Resetting org-publish-cache
+Loading /home/user/.org-timestamps/default-html.cache...
+Publishing file /home/user/git/page/doc/index.org using ‘org-html-publish-to-html’
+#+END_SRC
+
+This will have generated =doc/index.html= - nice, but not quite ideal. By setting the [[*publish_directory][publish_directory]] variable the output directory can be controlled:
+
+#+BEGIN_SRC shell
+~/page/> publish_directory=/tmp/org-publish ../publish-org-tree/publish-org-tree.sh
+Loading /home/user/git/publish-org-tree/publish-org-tree.el (source)...
+Loading /home/user/git/publish-org-tree/ox-thtml.el (source)...
+Package cl is deprecated
+,*** Configuration summary ***
+
+Configuration variables (defaults marked with *):
+
+,*default-page-template: page.html
+,*org-publish-function: org-html-publish-to-html
+,*project-directory: .
+,*project-name: default
+publish-directory: /tmp/org-publish
+,*static-files: (css eot gif jpg js json less mp3 ogg pdf png scss svg ttf txt woff woff2 yml zip)
+,*style-directory:
+,*template-directory:
+
+Publishing project ’default’ to /tmp/org-publish
+Elements in export alist:
+- default
+- default-static
+- default-html
+Loading /home/user/.org-timestamps/default-static.cache...
+Publishing file /home/user/git/page/style/css/default.css using ‘org-publish-attachment’
+Resetting org-publish-cache
+Loading /home/user/.org-timestamps/default-html.cache...
+Publishing file /home/user/git/page/doc/index.org using ‘org-html-publish-to-html’
+#+END_SRC
+
+Note that the output shows that =publish-directory= has been changed from the default value.
+
+Now =/tmp/org-publish= exists - but the =index.html= is still in the doc subdirectory. It can be moved to the root of the publish directory by setting the [[*project_directory][project_directory]] variable to =doc=:
+
+#+BEGIN_SRC shell
+~/page/> project_directory=doc publish_directory=/tmp/org-publish ../publish-org-tree/publish-org-tree.sh
+[..]
+Loading /home/user/.org-timestamps/default-static.cache...
+Resetting org-publish-cache
+Loading /home/user/.org-timestamps/default-html.cache...
+Publishing file /home/user/git/page/doc/index.org using ‘org-html-publish-to-html’
+#+END_SRC
+
+=index.html= is directly in =/tmp/org-publish= - but now the CSS is missing. The easiest way to keep CSS files separate from the rest of the page is by setting the [[*style_directory][style_directory]] variable:
+
+#+BEGIN_SRC shell
+~/page/> style_directory=../style project_directory=doc publish_directory=/tmp/org-publish ../publish-org-tree/publish-org-tree.sh
+[..]
+Elements in export alist:
+- default
+- default-style
+- default-static
+- default-html
+Loading /home/user/.org-timestamps/default-style.cache...
+Publishing file /home/user/git/page/style/css/default.css using ‘org-publish-attachment’
+Resetting org-publish-cache
+Loading /home/user/.org-timestamps/default-static.cache...
+Resetting org-publish-cache
+Loading /home/user/.org-timestamps/default-html.cache...
+Publishing file /home/user/git/page/doc/index.org using ‘org-html-publish-to-html’
+#+END_SRC
+
+Now =style/css= gets published to =/tmp/org-publish/css= in the additional =style= module.
+
+* Using as github action
+Assuming the local configuration works the parameters can be easily applied to the github action. All [[*Customising output with environment variables][environment variables]] can be set as environment for the action - but =publish-directory= is available is input to the action with a default more sensible for use in the action (=/tmp/publish-org-tree=):
+
+#+BEGIN_SRC
+    - name: Build page
+      uses: aardsoft/publish-org-tree@v1
+      env:
+        project_directory: doc
+        style_directory: ../style
+#+END_SRC
+
+After [[*Configure github pages][preparing the repository for github pages]] this action can also directly push the generated page to github pages:
+
+#+BEGIN_SRC
+    - name: Build page
+      uses: aardsoft/publish-org-tree@v1
+      with:
+        gh-pages: true
+      env:
+        project_directory: doc
+        style_directory: ../style
+        GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#+END_SRC
+
+Available inputs to control GitHub pages publishing are:
+
+- gh-pages, assumed =True= when set to any value
+- gh-pages-branch, the branch published pages should be pushed to. Default is =gh-pages=.
+- gh-pages-directory, the directory in the branch pages should be pushed to. Default is =.=, i.e., the root of the directory tree.
+
+* Customising output through org variables
+Some output options can be set per file by binding specific variables in the file header, in addition to the [[https://orgmode.org/manual/Export-Settings.html][usual org-mode export settings.]] Note that all variables listed here can also be set as [[*User setting files][user settings]] as global settings for a project.
+
+#+BEGIN_SRC org
+#+BIND: org-page-template "page_with_inline_sidebar.html"
+#+BIND: org-page-toc-in-sidebar t
+#+END_SRC
+
+Arbitrary variables can be used with org-thtml - but as the templates get compiled they need to be defined: =(defvar org-page-my-custom-variable nil)=. To avoid having to add [[*User setting files][user settings]] for common variables some variables only useful inside of templates are also pre-defined.
+
+** org-page-template
+Override the page template to use when exporting this page.
+
+** org-page-toc-level
+Set the depth of the TOC included in some templates. Default is =3=.
+
+Note that this needs to be supported in the templates - the relevant templates needs to contain something like this:
+
+#+BEGIN_SRC lisp
+{{(org-html-toc org-page-toc-level info)}}
+#+END_SRC
+
+** org-page-toc-in-sidebar
+Include a TOC in templates with inline sidebar. Default is =t=.
+
+Note that this needs to be supported in the templates - the relevant templates needs to contain something like this:
+
+#+BEGIN_SRC lisp
+{{(if org-page-toc-in-sidebar (org-html-toc org-page-toc-level info))}}
+#+END_SRC
+
+** org-page-stylesheets
+A list of stylesheets to add to the page. If the path is absolute it will be transformed to a path relative to the project directory. The default value is ='()=.
+
+#+BEGIN_SRC org
+#+BIND: org-page-stylesheets ("/css/default.css" "/css/pure/pure-min.css")
+#+END_SRC
+
+Note that this needs to be configured in the templates - see [[*add-relative-stylesheets][add-relative-stylesheets]] for details.
+
+** org-page-default-stylesheets
+Use a list of default stylesheets. The default value is =nil=. This is just a flag for guarding an implementation which needs to be either provided in a customisation file or a template. A possible way to do it in a template is:
+
+#+BEGIN_SRC lisp
+    {{
+(progn
+  (if (and (= (length org-page-stylesheets) 0) org-page-default-stylesheets)
+      (setq org-page-stylesheets '("/css/default.css"
+                                   "/css/pure/pure-min.css"
+                                   "/css/pure/grids-responsive-min.css"
+                                   "/css/layouts/blog.css")))
+    "")
+    }}
+#+END_SRC
+
+Note the =""= at the end - the template engine experts strings, so to execute arbitrary code without changing the output the last argument must be an empty string.
+
+** org-page-relative-stylesheets
+A list of stylesheets to add to a page with relative paths. Can be used as alternative to [[*org-page-stylesheets][org-page-stylesheets]] with a more descriptive name.
+
+** org-page-absolute-stylesheets
+A list of stylesheets to add to the path with absolute paths. The variable content will not be modified, and should already be absolute paths to the stylesheet locations on a server or filesystem.
+
+* Customising output with environment variables
+Some aspects of the export script can be controlled via environment variables, some of which are exported as action parameters. This section documents a complete list of available variables.
+
+** default_page_template
+The default template to use if no other template is specified.. Defaults to =page.html=.
+
+** org_publish_function
+The function to call for doing the export. Defaults to =org-html-publish-to-html=. For using org-thtml set this to =org-html-publish-to-templated-html=, look at the [[https://github.com/juanjosegarciaripoll/org-thtml/tree/master/personal-site/templates][org-thtml example templates]], generade a [[*template_directory][template directory]], and maybe read the [[*Advanced use: Lisp in templates][advanced templating section]].
+
+** project_directory
+The main directory to export. Defaults to =.=, which often is not what you want.
+
+** project_name
+The name of the project. This is mostly used internally, so leaving the default of =default= is fine in most cases.
+
+** publish_directory
+The directory to publish the generated files to. Defaults to "" when used directly, which usually is not what you want.
+
+** static_files
+A list of patterns for matching static files to export. Defaults to =css eot gif jpg js json less mp3 ogg pdf png scss svg ttf txt woff woff2 yml zip=.
+
+** style_directory
+A directory containing style sheets and similar files. The default is =""= (empty). When not empty this is treated as an additional static module.
+
+Note that the directory name is relative to the project directory. Assuming the following directory structure with the scripts executed in the =page= directory and the project set to =doc= the correct value for =style_directory= is =../style=
+
+#+BEGIN_EXAMPLE
+/home/user/page/
+|-- style
+|   `-- css
+|   `-- templates
+`-- doc
+#+END_EXAMPLE
+
+** template_directory
+A directory containing template files. Setting this usually is only sensible when using =org-html-publish-to-templated-html= as [[*org_publish_function][org_publish_function]].
+
+Just like [[*style_directory][style_directory]] this is relative to the [[*project_directory][project directory]].
+
+#+BEGIN_SRC yaml
+- name: Build page
+  uses: aardsoft/publish-org-tree@v1
+  with:
+    project-directory: doc
+    gh-pages: true
+  env:
+    GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    pre_excludes: .
+#+END_SRC
+
+* Advanced use: Lisp in templates
+=publish-org-tree.el= defines some helper function useful when using templates. This section documents those helper functions.
+
+** add-stylesheets
+This function takes a list of stylesheet files, and generates the matching link statements without altering the path names.
+
+It can be used in a template as follows:
+
+#+BEGIN_SRC lisp
+{{(if (> (length org-page-absolute-stylesheets) 0)(add-stylesheets org-page-absolute-stylesheets info))}}
+#+END_SRC
+
+** add-relative-stylesheets
+This function takes a list of stylesheets (see [[*org-page-stylesheets][org-page-stylesheets]] and [[*org-page-default-stylesheets][org-page-default-stylesheets]]), and generates path names relative to the project directory. This enables easy publishing of self-contained pages where CSS can be found by the browser both locally and when published to a web server.
+
+With =org-page-stylesheets= set either through a [[*User setting files][user setting file]], in a template or in the org header the following org-thtml snippet will include the correct stylesheets:
+
+#+BEGIN_SRC lisp
+{{(if (> (length org-page-stylesheets) 0)(add-relative-stylesheets org-page-stylesheets info))}}
+#+END_SRC
+
+** insert-from-file
+Insert the contents of a file without performing macro expansion:
+
+#+BEGIN_SRC lisp
+{{(insert-from-file "custom-insert.html")}}
+#+END_SRC
+
+The function takes a list of directories to search for the file as optional second argument. If omitted the file is searched in the project directory, followed by the template directory.
+
+* Configure github pages
 This action can directly publish to [[https://pages.github.com/][github pages]]. To use this first a branch for pages needs to be created. The following creates a branch with an empty index.html:
 
 #+BEGIN_SRC bash

@@ -15,10 +15,33 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Checkout style
+      uses: actions/checkout@v2
+      with:
+        repository: aardsoft/style
+        path: style
+        token: ${{ secrets.SERVICE_TOKEN }}
+
     - name: Build page
       uses: ./
       with:
         gh-pages: true
-        project-directory: doc
       env:
+        project_directory: doc
+        org_publish_function: org-html-publish-to-templated-html
+        template_directory: ../style/templates
+        style_directory: ../style
+        GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - name: Enable TOC for non-styled build
+      run: |
+        echo "(setq html-export-plist '(:with-toc t))" > export-settings.user
+
+    - name: Build non-styled page
+      uses: ./
+      with:
+        gh-pages: true
+        gh-pages-directory: plain/
+      env:
+        project_directory: doc
         GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
