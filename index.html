@@ -43,43 +43,19 @@
       </div>
 
       <div class="content pure-u-1 pure-u-md-2-3">
-        /tmp/publish-org-tree/out/sidebar.html
+        /tmp/publish-org-tree/sidebar.html
         <div class="pure-menu pure-menu-horizontal">
 </div>
 
 
         <div id="content">
-          <div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org264c712">Documentation</a>
-<ul>
-<li><a href="#org307167f">Finetune the output with environment variables</a>
-<ul>
-<li><a href="#org730a5d9">pre_excludes, excludes</a></li>
-<li><a href="#orged426ef">pre_includes, includes</a></li>
-<li><a href="#orgde0a4cf">pre_auto_sitemap (t), auto_sitemap (nil)</a></li>
-<li><a href="#orgdef2015">with_date, with_email, with_toc</a></li>
-<li><a href="#org8a4ab54">pre_sitemap_filename, sitemap_filename</a></li>
-<li><a href="#org5ebcd99">pre_headline_levels, headline_levels</a></li>
-<li><a href="#org3d7a850">pre_section_numbers, section_numbers</a></li>
-<li><a href="#orgdea8473">pre_org_publishing_function</a></li>
-</ul>
-</li>
-<li><a href="#org88e9870">Publish to github pages</a></li>
-</ul>
-</li>
-</ul>
+          <div id="outline-container-org21f1756" class="outline-2">
+<h2 id="org21f1756">Documentation</h2>
+<div class="outline-text-2" id="text-org21f1756">
 </div>
-</div>
-<div id="outline-container-org264c712" class="outline-2">
-<h2 id="org264c712">Documentation</h2>
-<div class="outline-text-2" id="text-org264c712">
-</div>
-<div id="outline-container-org307167f" class="outline-3">
-<h3 id="org307167f">Finetune the output with environment variables</h3>
-<div class="outline-text-3" id="text-org307167f">
+<div id="outline-container-orga84cd24" class="outline-3">
+<h3 id="orga84cd24">Finetune the output with environment variables</h3>
+<div class="outline-text-3" id="text-orga84cd24">
 <p>
 The script generating the project configuration evaluates several additional environment variables not exported as action inputs. They can be changed by just setting them in the environment:
 </p>
@@ -97,62 +73,62 @@ The script generating the project configuration evaluates several additional env
 </div>
 </div>
 
-<div id="outline-container-org730a5d9" class="outline-4">
-<h4 id="org730a5d9">pre_excludes, excludes</h4>
-<div class="outline-text-4" id="text-org730a5d9">
+<div id="outline-container-org864acea" class="outline-4">
+<h4 id="org864acea">pre_excludes, excludes</h4>
+<div class="outline-text-4" id="text-org864acea">
 <p>
 A list of strings to match files against for exclusion. Note that this is not a regular expression - the list is fed into <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Regexp-Functions.html">regexp-opt</a>, which tries to match the shortest possible strings. For example, setting this to <code>.</code> would include every file with a file extension (i.e., most, and with default settings, any file potentially included).
 </p>
 </div>
 </div>
 
-<div id="outline-container-orged426ef" class="outline-4">
-<h4 id="orged426ef">pre_includes, includes</h4>
-<div class="outline-text-4" id="text-orged426ef">
+<div id="outline-container-org840731e" class="outline-4">
+<h4 id="org840731e">pre_includes, includes</h4>
+<div class="outline-text-4" id="text-org840731e">
 <p>
 A list of extra files to include, relative to the document directory.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgde0a4cf" class="outline-4">
-<h4 id="orgde0a4cf">pre_auto_sitemap (t), auto_sitemap (nil)</h4>
-<div class="outline-text-4" id="text-orgde0a4cf">
+<div id="outline-container-org2a67c23" class="outline-4">
+<h4 id="org2a67c23">pre_auto_sitemap (t), auto_sitemap (nil)</h4>
+<div class="outline-text-4" id="text-org2a67c23">
 <p>
 Configures automatic sitemap generation. For a two pass configuration the main purpose of the first pass is to build the sitemap, while it does not need to be re-generated in the second pass - which is reflected in the defaults.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgdef2015" class="outline-4">
-<h4 id="orgdef2015">with_date, with_email, with_toc</h4>
-<div class="outline-text-4" id="text-orgdef2015">
+<div id="outline-container-orgb337f4f" class="outline-4">
+<h4 id="orgb337f4f">with_date, with_email, with_toc</h4>
+<div class="outline-text-4" id="text-orgb337f4f">
 <p>
 Configure inclusion of date, email or TOC.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org8a4ab54" class="outline-4">
-<h4 id="org8a4ab54">pre_sitemap_filename, sitemap_filename</h4>
+<div id="outline-container-org03fc8a6" class="outline-4">
+<h4 id="org03fc8a6">pre_sitemap_filename, sitemap_filename</h4>
 </div>
 
-<div id="outline-container-org5ebcd99" class="outline-4">
-<h4 id="org5ebcd99">pre_headline_levels, headline_levels</h4>
+<div id="outline-container-org552b8bd" class="outline-4">
+<h4 id="org552b8bd">pre_headline_levels, headline_levels</h4>
 </div>
 
-<div id="outline-container-org3d7a850" class="outline-4">
-<h4 id="org3d7a850">pre_section_numbers, section_numbers</h4>
+<div id="outline-container-orgc3a50c1" class="outline-4">
+<h4 id="orgc3a50c1">pre_section_numbers, section_numbers</h4>
 </div>
 
-<div id="outline-container-orgdea8473" class="outline-4">
-<h4 id="orgdea8473">pre_org_publishing_function</h4>
+<div id="outline-container-org8fd1215" class="outline-4">
+<h4 id="org8fd1215">pre_org_publishing_function</h4>
 </div>
 </div>
 
-<div id="outline-container-org88e9870" class="outline-3">
-<h3 id="org88e9870">Publish to github pages</h3>
-<div class="outline-text-3" id="text-org88e9870">
+<div id="outline-container-org8b0cac8" class="outline-3">
+<h3 id="org8b0cac8">Publish to github pages</h3>
+<div class="outline-text-3" id="text-org8b0cac8">
 <p>
 This action can directly publish to <a href="https://pages.github.com/">github pages</a>. To use this first a branch for pages needs to be created. The following creates a branch with an empty index.html:
 </p>
