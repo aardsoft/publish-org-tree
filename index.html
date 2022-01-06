@@ -13,6 +13,7 @@
   
     
     <link rel="stylesheet" href="css/default.css" type="text/css"/>
+<link rel="stylesheet" href="css/toc-float-left.css" type="text/css"/>
 <link rel="stylesheet" href="css/pure/pure-min.css" type="text/css"/>
 <link rel="stylesheet" href="css/pure/grids-responsive-min.css" type="text/css"/>
 <link rel="stylesheet" href="css/layouts/blog.css" type="text/css"/>
@@ -60,33 +61,33 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc09c8cf">Documentation</a>
+<li><a href="#org5e7f988">Documentation</a>
 <ul>
-<li><a href="#org0e4da4f">Finetune the output with environment variables</a>
+<li><a href="#orgd7eb537">Finetune the output with environment variables</a>
 <ul>
-<li><a href="#orge5722a2">pre_excludes, excludes</a></li>
-<li><a href="#orge20c41d">pre_includes, includes</a></li>
-<li><a href="#orgb798652">pre_auto_sitemap (t), auto_sitemap (nil)</a></li>
-<li><a href="#orgad8029a">with_date, with_email, with_toc</a></li>
-<li><a href="#orgae5984e">pre_sitemap_filename, sitemap_filename</a></li>
-<li><a href="#orga027b8a">pre_headline_levels, headline_levels</a></li>
-<li><a href="#org57ec855">pre_section_numbers, section_numbers</a></li>
-<li><a href="#org0dbcb7b">pre_org_publishing_function</a></li>
+<li><a href="#org82d021d">pre_excludes, excludes</a></li>
+<li><a href="#orgd9cc24b">pre_includes, includes</a></li>
+<li><a href="#orgd5b3967">pre_auto_sitemap (t), auto_sitemap (nil)</a></li>
+<li><a href="#orge6a953f">with_date, with_email, with_toc</a></li>
+<li><a href="#org1da487a">pre_sitemap_filename, sitemap_filename</a></li>
+<li><a href="#org3421758">pre_headline_levels, headline_levels</a></li>
+<li><a href="#orgc01f5b9">pre_section_numbers, section_numbers</a></li>
+<li><a href="#org6ee8523">pre_org_publishing_function</a></li>
 </ul>
 </li>
-<li><a href="#org18a0090">Publish to github pages</a></li>
+<li><a href="#org555167f">Publish to github pages</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc09c8cf" class="outline-2">
-<h2 id="orgc09c8cf">Documentation</h2>
-<div class="outline-text-2" id="text-orgc09c8cf">
+<div id="outline-container-org5e7f988" class="outline-2">
+<h2 id="org5e7f988">Documentation</h2>
+<div class="outline-text-2" id="text-org5e7f988">
 </div>
-<div id="outline-container-org0e4da4f" class="outline-3">
-<h3 id="org0e4da4f">Finetune the output with environment variables</h3>
-<div class="outline-text-3" id="text-org0e4da4f">
+<div id="outline-container-orgd7eb537" class="outline-3">
+<h3 id="orgd7eb537">Finetune the output with environment variables</h3>
+<div class="outline-text-3" id="text-orgd7eb537">
 <p>
 The script generating the project configuration evaluates several additional environment variables not exported as action inputs. They can be changed by just setting them in the environment:
 </p>
@@ -104,62 +105,62 @@ The script generating the project configuration evaluates several additional env
 </div>
 </div>
 
-<div id="outline-container-orge5722a2" class="outline-4">
-<h4 id="orge5722a2">pre_excludes, excludes</h4>
-<div class="outline-text-4" id="text-orge5722a2">
+<div id="outline-container-org82d021d" class="outline-4">
+<h4 id="org82d021d">pre_excludes, excludes</h4>
+<div class="outline-text-4" id="text-org82d021d">
 <p>
 A list of strings to match files against for exclusion. Note that this is not a regular expression - the list is fed into <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Regexp-Functions.html">regexp-opt</a>, which tries to match the shortest possible strings. For example, setting this to <code>.</code> would include every file with a file extension (i.e., most, and with default settings, any file potentially included).
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge20c41d" class="outline-4">
-<h4 id="orge20c41d">pre_includes, includes</h4>
-<div class="outline-text-4" id="text-orge20c41d">
+<div id="outline-container-orgd9cc24b" class="outline-4">
+<h4 id="orgd9cc24b">pre_includes, includes</h4>
+<div class="outline-text-4" id="text-orgd9cc24b">
 <p>
 A list of extra files to include, relative to the document directory.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb798652" class="outline-4">
-<h4 id="orgb798652">pre_auto_sitemap (t), auto_sitemap (nil)</h4>
-<div class="outline-text-4" id="text-orgb798652">
+<div id="outline-container-orgd5b3967" class="outline-4">
+<h4 id="orgd5b3967">pre_auto_sitemap (t), auto_sitemap (nil)</h4>
+<div class="outline-text-4" id="text-orgd5b3967">
 <p>
 Configures automatic sitemap generation. For a two pass configuration the main purpose of the first pass is to build the sitemap, while it does not need to be re-generated in the second pass - which is reflected in the defaults.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgad8029a" class="outline-4">
-<h4 id="orgad8029a">with_date, with_email, with_toc</h4>
-<div class="outline-text-4" id="text-orgad8029a">
+<div id="outline-container-orge6a953f" class="outline-4">
+<h4 id="orge6a953f">with_date, with_email, with_toc</h4>
+<div class="outline-text-4" id="text-orge6a953f">
 <p>
 Configure inclusion of date, email or TOC.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgae5984e" class="outline-4">
-<h4 id="orgae5984e">pre_sitemap_filename, sitemap_filename</h4>
+<div id="outline-container-org1da487a" class="outline-4">
+<h4 id="org1da487a">pre_sitemap_filename, sitemap_filename</h4>
 </div>
 
-<div id="outline-container-orga027b8a" class="outline-4">
-<h4 id="orga027b8a">pre_headline_levels, headline_levels</h4>
+<div id="outline-container-org3421758" class="outline-4">
+<h4 id="org3421758">pre_headline_levels, headline_levels</h4>
 </div>
 
-<div id="outline-container-org57ec855" class="outline-4">
-<h4 id="org57ec855">pre_section_numbers, section_numbers</h4>
+<div id="outline-container-orgc01f5b9" class="outline-4">
+<h4 id="orgc01f5b9">pre_section_numbers, section_numbers</h4>
 </div>
 
-<div id="outline-container-org0dbcb7b" class="outline-4">
-<h4 id="org0dbcb7b">pre_org_publishing_function</h4>
+<div id="outline-container-org6ee8523" class="outline-4">
+<h4 id="org6ee8523">pre_org_publishing_function</h4>
 </div>
 </div>
 
-<div id="outline-container-org18a0090" class="outline-3">
-<h3 id="org18a0090">Publish to github pages</h3>
-<div class="outline-text-3" id="text-org18a0090">
+<div id="outline-container-org555167f" class="outline-3">
+<h3 id="org555167f">Publish to github pages</h3>
+<div class="outline-text-3" id="text-org555167f">
 <p>
 This action can directly publish to <a href="https://pages.github.com/">github pages</a>. To use this first a branch for pages needs to be created. The following creates a branch with an empty index.html:
 </p>
