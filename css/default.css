@@ -416,13 +416,6 @@ textarea {
     width: 90%;
 }
 
-#table-of-contents {
-  position: fixed;
-  right: 0;
-  top: 0;
-  background-color:#FFF;
-}
-
 #shortcuts {
   position: fixed;
   left: 30;
