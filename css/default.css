@@ -435,3 +435,21 @@ textarea {
 #shortcuts:hover #shortcut-contents {
   display: block;
 }
+
+#table-of-contents h2 {
+    text-align: center;
+}
+
+#table-of-contents ul {
+    //margin: 0;
+    //padding: 0;
+    list-style: none;
+    //list-style: disc;
+    //text-align: left;
+}
+
+#table-of-contents li {
+//    display: inline-block;
+//    *display: inline;
+    zoom: 1;
+}
