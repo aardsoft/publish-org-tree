@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2022-01-10 Mon 16:58 -->
+<!-- 2022-01-10 Mon 17:07 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>title of this thing</title>
@@ -231,36 +231,52 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org091853c">Using as github action</a></li>
-<li><a href="#org20aa404">Customising output through org variables</a>
+<li><a href="#orgb02c2d5">Using as github action</a></li>
+<li><a href="#orgd9018bd">Customising output through org variables</a>
 <ul>
-<li><a href="#org6e31782">org-page-template</a></li>
-<li><a href="#org27fd2d4">org-page-toc-level</a></li>
-<li><a href="#org7396454">org-page-toc-in-sidebar</a></li>
-<li><a href="#orgb9c4784">org-page-stylesheets</a></li>
-<li><a href="#orgdaac777">org-page-default-stylesheets</a></li>
+<li><a href="#org54d6973">org-page-template</a></li>
+<li><a href="#orgb80e729">org-page-toc-level</a></li>
+<li><a href="#orgd15ef42">org-page-toc-in-sidebar</a></li>
+<li><a href="#orgae44157">org-page-stylesheets</a></li>
+<li><a href="#orgb4a3d2c">org-page-default-stylesheets</a></li>
 </ul>
 </li>
-<li><a href="#org280f59f">Finetune the output with environment variables</a>
+<li><a href="#org811df2a">Finetune the output with environment variables</a>
 <ul>
-<li><a href="#org56b9468">pre_excludes, excludes</a></li>
-<li><a href="#orgca28f08">pre_includes, includes</a></li>
-<li><a href="#orgc29e8c3">pre_auto_sitemap (t), auto_sitemap (nil)</a></li>
-<li><a href="#orgba41828">with_date, with_email, with_toc</a></li>
-<li><a href="#org1bbdb9c">pre_sitemap_filename, sitemap_filename</a></li>
-<li><a href="#org6bb51ac">pre_headline_levels, headline_levels</a></li>
-<li><a href="#org14e7f30">pre_section_numbers, section_numbers</a></li>
-<li><a href="#org345d4f0">pre_org_publishing_function</a></li>
+<li><a href="#orgeac735c">pre_excludes, excludes</a></li>
+<li><a href="#org400512e">pre_includes, includes</a></li>
+<li><a href="#orgeed7388">pre_auto_sitemap (t), auto_sitemap (nil)</a></li>
+<li><a href="#org055efe8">with_date, with_email, with_toc</a></li>
+<li><a href="#org0e7cecc">pre_sitemap_filename, sitemap_filename</a></li>
+<li><a href="#org09fc9a0">pre_headline_levels, headline_levels</a></li>
+<li><a href="#orgbc45bab">pre_section_numbers, section_numbers</a></li>
+<li><a href="#org9d9b284">pre_org_publishing_function</a></li>
 </ul>
 </li>
-<li><a href="#org2883ea9">Configure github pages</a></li>
+<li><a href="#org3c63b6a">Configure github pages</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org091853c" class="outline-2">
-<h2 id="org091853c">Using as github action</h2>
-<div class="outline-text-2" id="text-org091853c">
+<div id="outline-container-orgb02c2d5" class="outline-2">
+<h2 id="orgb02c2d5">Using as github action</h2>
+<div class="outline-text-2" id="text-orgb02c2d5">
+<pre class="example">
+- name: Build page
+  uses: aardsoft/publish-org-tree@v1
+  with:
+    project-directory: doc
+    org-publishing-function: org-html-publish-to-templated-html
+  env:
+    sitemap: t
+    template_directory: ../templates
+    style_dir: style
+</pre>
+
+<p>
+After <a href="#org3c63b6a">preparing the repository for github pages</a> this action can directly push the generated page to github pages:
+</p>
+
 <pre class="example">
 - name: Build page
   uses: aardsoft/publish-org-tree@v1
@@ -274,16 +290,12 @@ for the JavaScript code in this tag.
     style_dir: style
     GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 </pre>
-
-<p>
-<a href="#org2883ea9">github pages is configured</a>
-</p>
 </div>
 </div>
 
-<div id="outline-container-org20aa404" class="outline-2">
-<h2 id="org20aa404">Customising output through org variables</h2>
-<div class="outline-text-2" id="text-org20aa404">
+<div id="outline-container-orgd9018bd" class="outline-2">
+<h2 id="orgd9018bd">Customising output through org variables</h2>
+<div class="outline-text-2" id="text-orgd9018bd">
 <p>
 Some output options can be set per file by binding specific variables in the file header:
 </p>
@@ -295,18 +307,18 @@ Some output options can be set per file by binding specific variables in the fil
 </div>
 </div>
 
-<div id="outline-container-org6e31782" class="outline-3">
-<h3 id="org6e31782">org-page-template</h3>
-<div class="outline-text-3" id="text-org6e31782">
+<div id="outline-container-org54d6973" class="outline-3">
+<h3 id="org54d6973">org-page-template</h3>
+<div class="outline-text-3" id="text-org54d6973">
 <p>
 Override the page template to use when exporting this page.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org27fd2d4" class="outline-3">
-<h3 id="org27fd2d4">org-page-toc-level</h3>
-<div class="outline-text-3" id="text-org27fd2d4">
+<div id="outline-container-orgb80e729" class="outline-3">
+<h3 id="orgb80e729">org-page-toc-level</h3>
+<div class="outline-text-3" id="text-orgb80e729">
 <p>
 Set the depth of the TOC included in some templates. Default is <code>3</code>.
 </p>
@@ -322,9 +334,9 @@ Noto that this needs to be set in the templates - the relevant templates needs t
 </div>
 </div>
 
-<div id="outline-container-org7396454" class="outline-3">
-<h3 id="org7396454">org-page-toc-in-sidebar</h3>
-<div class="outline-text-3" id="text-org7396454">
+<div id="outline-container-orgd15ef42" class="outline-3">
+<h3 id="orgd15ef42">org-page-toc-in-sidebar</h3>
+<div class="outline-text-3" id="text-orgd15ef42">
 <p>
 Include a TOC in templates with inline sidebar. Default is <code>t</code>.
 </p>
@@ -340,9 +352,9 @@ Note that this needs to be set in the templates - the relevant templates needs t
 </div>
 </div>
 
-<div id="outline-container-orgb9c4784" class="outline-3">
-<h3 id="orgb9c4784">org-page-stylesheets</h3>
-<div class="outline-text-3" id="text-orgb9c4784">
+<div id="outline-container-orgae44157" class="outline-3">
+<h3 id="orgae44157">org-page-stylesheets</h3>
+<div class="outline-text-3" id="text-orgae44157">
 <p>
 A list of stylesheets to add to the page. If the path is absolute it will be transformed to a path relative to the project directory. The default value is <code>'()</code>.
 </p>
@@ -363,9 +375,9 @@ Note that this needs to be set in the templates - the relevant templates need to
 </div>
 </div>
 
-<div id="outline-container-orgdaac777" class="outline-3">
-<h3 id="orgdaac777">org-page-default-stylesheets</h3>
-<div class="outline-text-3" id="text-orgdaac777">
+<div id="outline-container-orgb4a3d2c" class="outline-3">
+<h3 id="orgb4a3d2c">org-page-default-stylesheets</h3>
+<div class="outline-text-3" id="text-orgb4a3d2c">
 <p>
 Use a list of default stylesheets. The default value is <code>nil</code>. This is just a flag for guarding an implementation which needs to be either provided in a customisation file or a template. A possible way to do it in a template is:
 </p>
@@ -390,9 +402,9 @@ Note the <code>""</code> at the end - the template engine experts strings, so to
 </div>
 </div>
 
-<div id="outline-container-org280f59f" class="outline-2">
-<h2 id="org280f59f">Finetune the output with environment variables</h2>
-<div class="outline-text-2" id="text-org280f59f">
+<div id="outline-container-org811df2a" class="outline-2">
+<h2 id="org811df2a">Finetune the output with environment variables</h2>
+<div class="outline-text-2" id="text-org811df2a">
 <p>
 The script generating the project configuration evaluates several additional environment variables not exported as action inputs. They can be changed by just setting them in the environment:
 </p>
@@ -410,62 +422,62 @@ The script generating the project configuration evaluates several additional env
 </div>
 </div>
 
-<div id="outline-container-org56b9468" class="outline-3">
-<h3 id="org56b9468">pre_excludes, excludes</h3>
-<div class="outline-text-3" id="text-org56b9468">
+<div id="outline-container-orgeac735c" class="outline-3">
+<h3 id="orgeac735c">pre_excludes, excludes</h3>
+<div class="outline-text-3" id="text-orgeac735c">
 <p>
 A list of strings to match files against for exclusion. Note that this is not a regular expression - the list is fed into <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Regexp-Functions.html">regexp-opt</a>, which tries to match the shortest possible strings. For example, setting this to <code>.</code> would include every file with a file extension (i.e., most, and with default settings, any file potentially included).
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgca28f08" class="outline-3">
-<h3 id="orgca28f08">pre_includes, includes</h3>
-<div class="outline-text-3" id="text-orgca28f08">
+<div id="outline-container-org400512e" class="outline-3">
+<h3 id="org400512e">pre_includes, includes</h3>
+<div class="outline-text-3" id="text-org400512e">
 <p>
 A list of extra files to include, relative to the document directory.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc29e8c3" class="outline-3">
-<h3 id="orgc29e8c3">pre_auto_sitemap (t), auto_sitemap (nil)</h3>
-<div class="outline-text-3" id="text-orgc29e8c3">
+<div id="outline-container-orgeed7388" class="outline-3">
+<h3 id="orgeed7388">pre_auto_sitemap (t), auto_sitemap (nil)</h3>
+<div class="outline-text-3" id="text-orgeed7388">
 <p>
 Configures automatic sitemap generation. For a two pass configuration the main purpose of the first pass is to build the sitemap, while it does not need to be re-generated in the second pass - which is reflected in the defaults.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgba41828" class="outline-3">
-<h3 id="orgba41828">with_date, with_email, with_toc</h3>
-<div class="outline-text-3" id="text-orgba41828">
+<div id="outline-container-org055efe8" class="outline-3">
+<h3 id="org055efe8">with_date, with_email, with_toc</h3>
+<div class="outline-text-3" id="text-org055efe8">
 <p>
 Configure inclusion of date, email or TOC.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org1bbdb9c" class="outline-3">
-<h3 id="org1bbdb9c">pre_sitemap_filename, sitemap_filename</h3>
+<div id="outline-container-org0e7cecc" class="outline-3">
+<h3 id="org0e7cecc">pre_sitemap_filename, sitemap_filename</h3>
 </div>
 
-<div id="outline-container-org6bb51ac" class="outline-3">
-<h3 id="org6bb51ac">pre_headline_levels, headline_levels</h3>
+<div id="outline-container-org09fc9a0" class="outline-3">
+<h3 id="org09fc9a0">pre_headline_levels, headline_levels</h3>
 </div>
 
-<div id="outline-container-org14e7f30" class="outline-3">
-<h3 id="org14e7f30">pre_section_numbers, section_numbers</h3>
+<div id="outline-container-orgbc45bab" class="outline-3">
+<h3 id="orgbc45bab">pre_section_numbers, section_numbers</h3>
 </div>
 
-<div id="outline-container-org345d4f0" class="outline-3">
-<h3 id="org345d4f0">pre_org_publishing_function</h3>
+<div id="outline-container-org9d9b284" class="outline-3">
+<h3 id="org9d9b284">pre_org_publishing_function</h3>
 </div>
 </div>
 
-<div id="outline-container-org2883ea9" class="outline-2">
-<h2 id="org2883ea9">Configure github pages</h2>
-<div class="outline-text-2" id="text-org2883ea9">
+<div id="outline-container-org3c63b6a" class="outline-2">
+<h2 id="org3c63b6a">Configure github pages</h2>
+<div class="outline-text-2" id="text-org3c63b6a">
 <p>
 This action can directly publish to <a href="https://pages.github.com/">github pages</a>. To use this first a branch for pages needs to be created. The following creates a branch with an empty index.html:
 </p>
@@ -503,7 +515,7 @@ The <code>GH_TOKEN</code> variable with the github secret is required for pushin
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2022-01-10 Mon 16:58</p>
+<p class="date">Created: 2022-01-10 Mon 17:07</p>
 <p class="validation"></p>
 </div>
 </body>
