@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2022-01-10 Mon 19:29 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>title of this thing</title>
+<meta name="generator" content="Org mode">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">title of this thing</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd7e59da">Using as github action</a></li>
+<li><a href="#orgf844c76">Customising output through org variables</a>
+<ul>
+<li><a href="#org6eb500a">org-page-template</a></li>
+<li><a href="#org6d89949">org-page-toc-level</a></li>
+<li><a href="#org82dd668">org-page-toc-in-sidebar</a></li>
+<li><a href="#org35f450c">org-page-stylesheets</a></li>
+<li><a href="#org5f36b5c">org-page-default-stylesheets</a></li>
+</ul>
+</li>
+<li><a href="#org6f5c9b0">Finetune the output with environment variables</a>
+<ul>
+<li><a href="#org86f775e">pre_excludes, excludes</a></li>
+<li><a href="#org9e70052">pre_includes, includes</a></li>
+<li><a href="#org9880b71">pre_auto_sitemap (t), auto_sitemap (nil)</a></li>
+<li><a href="#org1f98224">with_date, with_email, with_toc</a></li>
+<li><a href="#org84fe1f0">pre_sitemap_filename, sitemap_filename</a></li>
+<li><a href="#orge9f977b">pre_headline_levels, headline_levels</a></li>
+<li><a href="#orgd11957b">pre_section_numbers, section_numbers</a></li>
+<li><a href="#org796b115">pre_org_publishing_function</a></li>
+</ul>
+</li>
+<li><a href="#org3158b75">Configure github pages</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd7e59da" class="outline-2">
+<h2 id="orgd7e59da">Using as github action</h2>
+<div class="outline-text-2" id="text-orgd7e59da">
+<pre class="example">
+- name: Build page
+  uses: aardsoft/publish-org-tree@v1
+  with:
+    project-directory: doc
+    org-publishing-function: org-html-publish-to-templated-html
+  env:
+    sitemap: t
+    template_directory: ../templates
+    style_dir: style
+</pre>
+
+<p>
+After <a href="#org3158b75">preparing the repository for github pages</a> this action can directly push the generated page to github pages:
+</p>
+
+<pre class="example">
+- name: Build page
+  uses: aardsoft/publish-org-tree@v1
+  with:
+    gh-pages: true
+    project-directory: doc
+    org-publishing-function: org-html-publish-to-templated-html
+  env:
+    sitemap: t
+    template_directory: ../templates
+    style_dir: style
+    GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgf844c76" class="outline-2">
+<h2 id="orgf844c76">Customising output through org variables</h2>
+<div class="outline-text-2" id="text-orgf844c76">
+<p>
+Some output options can be set per file by binding specific variables in the file header:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span style="font-weight: bold; font-style: italic;">#+BIND: org-page-template "page_with_inline_sidebar.html"</span>
+<span style="font-weight: bold; font-style: italic;">#+BIND: org-page-toc-in-sidebar t</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org6eb500a" class="outline-3">
+<h3 id="org6eb500a">org-page-template</h3>
+<div class="outline-text-3" id="text-org6eb500a">
+<p>
+Override the page template to use when exporting this page.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6d89949" class="outline-3">
+<h3 id="org6d89949">org-page-toc-level</h3>
+<div class="outline-text-3" id="text-org6d89949">
+<p>
+Set the depth of the TOC included in some templates. Default is <code>3</code>.
+</p>
+
+<p>
+Noto that this needs to be set in the templates - the relevant templates needs to contain something like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">{{(org-html-toc org-page-toc-level info)}}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org82dd668" class="outline-3">
+<h3 id="org82dd668">org-page-toc-in-sidebar</h3>
+<div class="outline-text-3" id="text-org82dd668">
+<p>
+Include a TOC in templates with inline sidebar. Default is <code>t</code>.
+</p>
+
+<p>
+Note that this needs to be set in the templates - the relevant templates needs to contain something like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">{{(<span style="font-weight: bold;">if</span> org-page-toc-in-sidebar (org-html-toc org-page-toc-level info))}}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org35f450c" class="outline-3">
+<h3 id="org35f450c">org-page-stylesheets</h3>
+<div class="outline-text-3" id="text-org35f450c">
+<p>
+A list of stylesheets to add to the page. If the path is absolute it will be transformed to a path relative to the project directory. The default value is <code>'()</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span style="font-weight: bold; font-style: italic;">#+BIND: org-page-stylesheets ("/css/default.css" "/css/pure/pure-min.css")</span>
+</pre>
+</div>
+
+<p>
+Note that this needs to be set in the templates - the relevant templates need to contain something like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">{{(<span style="font-weight: bold;">if</span> (&gt; (length org-page-stylesheets) 0)(add-relative-stylesheets org-page-stylesheets info))}}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5f36b5c" class="outline-3">
+<h3 id="org5f36b5c">org-page-default-stylesheets</h3>
+<div class="outline-text-3" id="text-org5f36b5c">
+<p>
+Use a list of default stylesheets. The default value is <code>nil</code>. This is just a flag for guarding an implementation which needs to be either provided in a customisation file or a template. A possible way to do it in a template is:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">    {{
+(<span style="font-weight: bold;">progn</span>
+  (<span style="font-weight: bold;">if</span> (and (= (length org-page-stylesheets) 0) org-page-default-stylesheets)
+      (setq org-page-stylesheets '(<span style="font-style: italic;">"/css/default.css"</span>
+                                   <span style="font-style: italic;">"/css/pure/pure-min.css"</span>
+                                   <span style="font-style: italic;">"/css/pure/grids-responsive-min.css"</span>
+                                   <span style="font-style: italic;">"/css/layouts/blog.css"</span>)))
+    <span style="font-style: italic;">""</span>)
+    }}
+</pre>
+</div>
+
+<p>
+Note the <code>""</code> at the end - the template engine experts strings, so to execute arbitrary code without changing the output the last argument must be an empty string.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6f5c9b0" class="outline-2">
+<h2 id="org6f5c9b0">Finetune the output with environment variables</h2>
+<div class="outline-text-2" id="text-org6f5c9b0">
+<p>
+The script generating the project configuration evaluates several additional environment variables not exported as action inputs. They can be changed by just setting them in the environment:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml">- name: Build page
+  uses: aardsoft/publish-org-tree@v1
+  with:
+    project-directory: doc
+    gh-pages: true
+  env:
+    GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    pre_excludes: .
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org86f775e" class="outline-3">
+<h3 id="org86f775e">pre_excludes, excludes</h3>
+<div class="outline-text-3" id="text-org86f775e">
+<p>
+A list of strings to match files against for exclusion. Note that this is not a regular expression - the list is fed into <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Regexp-Functions.html">regexp-opt</a>, which tries to match the shortest possible strings. For example, setting this to <code>.</code> would include every file with a file extension (i.e., most, and with default settings, any file potentially included).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9e70052" class="outline-3">
+<h3 id="org9e70052">pre_includes, includes</h3>
+<div class="outline-text-3" id="text-org9e70052">
+<p>
+A list of extra files to include, relative to the document directory.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9880b71" class="outline-3">
+<h3 id="org9880b71">pre_auto_sitemap (t), auto_sitemap (nil)</h3>
+<div class="outline-text-3" id="text-org9880b71">
+<p>
+Configures automatic sitemap generation. For a two pass configuration the main purpose of the first pass is to build the sitemap, while it does not need to be re-generated in the second pass - which is reflected in the defaults.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1f98224" class="outline-3">
+<h3 id="org1f98224">with_date, with_email, with_toc</h3>
+<div class="outline-text-3" id="text-org1f98224">
+<p>
+Configure inclusion of date, email or TOC.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org84fe1f0" class="outline-3">
+<h3 id="org84fe1f0">pre_sitemap_filename, sitemap_filename</h3>
+</div>
+
+<div id="outline-container-orge9f977b" class="outline-3">
+<h3 id="orge9f977b">pre_headline_levels, headline_levels</h3>
+</div>
+
+<div id="outline-container-orgd11957b" class="outline-3">
+<h3 id="orgd11957b">pre_section_numbers, section_numbers</h3>
+</div>
+
+<div id="outline-container-org796b115" class="outline-3">
+<h3 id="org796b115">pre_org_publishing_function</h3>
+</div>
+</div>
+
+<div id="outline-container-org3158b75" class="outline-2">
+<h2 id="org3158b75">Configure github pages</h2>
+<div class="outline-text-2" id="text-org3158b75">
+<p>
+This action can directly publish to <a href="https://pages.github.com/">github pages</a>. To use this first a branch for pages needs to be created. The following creates a branch with an empty index.html:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">:@dev; git checkout --orphan gh-pages
+:@dev; git rm -rf .
+:@dev; touch index.html
+:@dev; git add index.html
+:@dev; git commit -m <span style="font-style: italic;">'Initialize gh-pages branch'</span>
+:@dev; git push origin gh-pages
+:@dev; git checkout master
+</pre>
+</div>
+
+<p>
+Next the <code>gh-pages</code> parameter needs to be added to this action. Note that any value here is read as <code>True</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml">- name: Build page
+  uses: aardsoft/publish-org-tree@v1
+  with:
+    project-directory: doc
+    gh-pages: true
+  env:
+    GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+</pre>
+</div>
+
+<p>
+The <code>GH_TOKEN</code> variable with the github secret is required for pushing to the branch.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2022-01-10 Mon 19:29</p>
+<p class="validation"></p>
+</div>
+</body>
+</html>
