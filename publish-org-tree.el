@@ -30,6 +30,7 @@
 
 ;; org-mode export defaults
 (setq org-confirm-babel-evaluate nil
+      org-html-htmlize-output-type 'css
       org-html-validation-link nil
       org-publish-use-timestamps-flag nil
       org-export-with-sub-superscripts '{})
