@@ -73,7 +73,7 @@
                          :project-directory "."
                          :project-name "default"
                          :publish-directory ""
-                         :static-files (css eot gif jpg js json less mp3 ogg pdf png scss svg ttf txt woff woff2 yml zip)
+                         :static-files (css eot gif jpg js json less mp3 ogg pdf png scss svg ttf txt woff woff2 yml zip ps1 sh)
                          :style-directory ""
                          :template-directory ""
                          ))
