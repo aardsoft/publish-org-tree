@@ -31,7 +31,7 @@ h3 {
     margin: 3em auto;
 }
 .sidebar {
-    background: rgb(61, 79, 93);
+    background: var(--aardsoft-gray);
     color: #fff;
 }
 .portrait {

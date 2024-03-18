@@ -1,3 +1,11 @@
+:root {
+    --aardsoft-purple: #A16AE6;
+    --aardsoft-orange: #E6A16A;
+    --aardsoft-green: #6AE6A1;    
+    --aardsoft-dirtywhite: #faebd7;  
+    --aardsoft-gray: #B0CADC;  
+  }
+
 .title  {
     text-align: center;
     margin-bottom: .2em;
@@ -420,7 +428,7 @@ textarea {
   position: fixed;
   left: 30;
   top: 30;
-  background: rgb(61, 79, 93);
+  background: var(--aardsoft-gray);
   color: #fff;
   float: left;
 }
@@ -434,6 +442,11 @@ textarea {
 */
 #shortcuts:hover #shortcut-contents {
   display: block;
+}
+
+#table-of-contents {
+    overflow-y: auto;
+    height:  100%;
 }
 
 #table-of-contents h2 {
